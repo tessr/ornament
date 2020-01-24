@@ -20,7 +20,7 @@ var (
 func main() {
 
 	args := os.Args[1:]
-	if len(args) < 1 || (args[0] != "wipe" && args[0] != "add" && args[0] != check && args[0] != "print") {
+	if len(args) < 1 || (args[0] != "wipe" && args[0] != "add" && args[0] != "check" && args[0] != "print") {
 		fmt.Fprintln(os.Stderr, "Usage: ornament <wipe|add|check|print>")
 		os.Exit(1)
 	}
@@ -94,7 +94,7 @@ func add(key, value string) (*iavl.MutableTree, error) {
 		return nil, err
 	}
 
-	log.Printf("added <%s, %s> to create tree #%d with hash %s / %x", key, value, versionNumber, hexToEmoji(hash), hash)
+	log.Printf("added <%s, %s> to create tree #%d with hash %s / %x", key, value, versionNumber, hashToEmoji(hash), hash)
 	return tree, nil
 }
 
@@ -114,18 +114,17 @@ func nodeEncoder(id []byte, depth int, isLeaf bool) string {
 	return fmt.Sprintf("%s%s", prefix, encodeID(id))
 }
 
-// casts to a string if it is printable ascii, hex-encodes otherwise
+// casts to a string if it is printable ascii, emoji-hex-encodes otherwise
 func encodeID(id []byte) string {
 	for _, b := range id {
 		if b < 0x20 || b >= 0x80 {
-			// return strings.ToUpper(hex.EncodeToString(id))
-			return hexToEmoji(id)
+			return hashToEmoji(id)
 		}
 	}
 	return string(id)
 }
 
-func hexToEmoji(id []byte) string {
+func hashToEmoji(id []byte) string {
 	shorty := hex.EncodeToString(id[:7])
 	dec, _ := strconv.ParseInt(shorty, 16, 64)
 	n := int(dec) % len(emoji)
