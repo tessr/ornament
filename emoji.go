@@ -1,5 +1,6 @@
 package main
 
+// just a big ole string slice of emoji
 var emoji = []string{
 	"🍻",
 	"😛",
