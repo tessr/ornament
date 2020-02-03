@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/hex"
 	"fmt"
-	"strconv"
+
+	"github.com/tessr/hmoj"
 )
 
 func nodeEncoder(id []byte, depth int, isLeaf bool) string {
@@ -21,15 +21,8 @@ func nodeEncoder(id []byte, depth int, isLeaf bool) string {
 func encodeID(id []byte) string {
 	for _, b := range id {
 		if b < 0x20 || b >= 0x80 {
-			return hashToEmoji(id)
+			return hmoj.Encode(id)
 		}
 	}
 	return string(id)
-}
-
-func hashToEmoji(id []byte) string {
-	shorty := hex.EncodeToString(id[:7])
-	dec, _ := strconv.ParseInt(shorty, 16, 64)
-	n := int(dec) % len(emoji)
-	return fmt.Sprintf("%s %s", emoji[n], shorty)
 }

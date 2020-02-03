@@ -9,6 +9,7 @@ import (
 
 	"github.com/tendermint/iavl"
 	tmdb "github.com/tendermint/tm-db"
+	"github.com/tessr/hmoj
 )
 
 var (
@@ -110,7 +111,7 @@ func add(key, value string) (*iavl.MutableTree, error) {
 		return nil, err
 	}
 
-	fmt.Printf("added <%s, %s> to create tree #%d with hash %s / %x", key, value, versionNumber, hashToEmoji(hash), hash)
+	fmt.Printf("added <%s, %s> to create tree #%d with hash %s / %x", key, value, versionNumber, hmoj.Encode(hash), hash)
 	return tree, nil
 }
 
