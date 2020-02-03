@@ -9,7 +9,7 @@ import (
 
 	"github.com/tendermint/iavl"
 	tmdb "github.com/tendermint/tm-db"
-	"github.com/tessr/hmoj
+	"github.com/tessr/hmoj"
 )
 
 var (
